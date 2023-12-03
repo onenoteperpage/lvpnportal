@@ -1,0 +1,29 @@
+﻿@page "/"
+@attribute [Authorize]
+@*@inject IUsrService UsrService*@
+
+<PageTitle>LunaVPN Portal</PageTitle>
+
+<h2>@usrId</h2>
+<h3>@email</h3>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
+    private string usrId = string.Empty;
+    private string email = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (authenticationState is not null)
+        {
+            var state = await authenticationState;
+            email = state?.User?.Identity?.Name ?? "UNKNOWN USER";
+            usrId = EncryptionHelper.GenerateToken(email);
+            //await UsrService.CreateUserAccount(encryptedUserId: usrId);
+        }
+
+        await base.OnInitializedAsync();
+    }
+}

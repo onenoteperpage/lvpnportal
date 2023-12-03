@@ -1,0 +1,74 @@
+﻿@page "/dashboard"
+
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Data Usage
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-dark">VPN Servers</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Locale</th>
+                            <th>Reboot</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Server1</td>
+                            <td><span class="fi fi-tm"></span></td>
+                            <td><button type="button" class="btn btn-warning btn-sm">Reboot</button></td>
+                            <td><button type="button" class="btn btn-danger btn-sm">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>Server1</td>
+                            <td><span class="fi fi-tm"></span></td>
+                            <td><button type="button" class="btn btn-warning btn-sm">Reboot</button></td>
+                            <td><button type="button" class="btn btn-danger btn-sm">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>Server1</td>
+                            <td><span class="fi fi-tm"></span></td>
+                            <td><button type="button" class="btn btn-warning btn-sm">Reboot</button></td>
+                            <td><button type="button" class="btn btn-danger btn-sm">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@code {
+    private int serverCount = 2;
+    private string strServer = " Server";
+    private string strServers = " Servers";
+    private string accountExpDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
+    private string notificationCount = "2";
+}
+

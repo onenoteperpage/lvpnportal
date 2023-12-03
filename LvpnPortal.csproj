@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseAppHost>false</UseAppHost>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'lvpnportal' " />
+  <ItemGroup>
+    <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.3.1" />
+    <PackageReference Include="Blazored.Toast" Version="4.1.0" />
+    <PackageReference Include="Stripe.net" Version="43.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Data\" />
+    <None Remove="etc\" />
+    <None Remove="Pages\Dashboard\" />
+    <None Remove="Shared\Helper\" />
+    <None Remove="Models\" />
+    <None Remove="Models\Enums\" />
+    <None Remove="Services\" />
+    <None Remove="Interfaces\" />
+    <None Remove="Pages\Instance\" />
+    <None Remove="Models\VultrApi\" />
+    <None Remove="Models\VultrApi\Regions\" />
+    <None Remove="Models\VultrApi\Shared\" />
+    <None Remove="Shared\VultrCustom\" />
+    <None Remove="Models\LunaCustom\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="etc\" />
+    <Folder Include="Pages\Dashboard\" />
+    <Folder Include="Shared\Helper\" />
+    <Folder Include="Models\" />
+    <Folder Include="Models\Enums\" />
+    <Folder Include="Services\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Pages\Instance\" />
+    <Folder Include="Models\VultrApi\" />
+    <Folder Include="Models\VultrApi\Regions\" />
+    <Folder Include="Models\VultrApi\Shared\" />
+    <Folder Include="Shared\VultrCustom\" />
+    <Folder Include="Models\LunaCustom\" />
+  </ItemGroup>
+</Project>

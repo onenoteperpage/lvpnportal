@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1706.7
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LvpnPortal", "LvpnPortal.csproj", "{C8C50A24-5B96-4298-9D20-C200A24BF386}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B14071E4-DBFC-488F-B29D-7E218DD88514}"
+	ProjectSection(SolutionItems) = preProject
+		run-local.sh = run-local.sh
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8C50A24-5B96-4298-9D20-C200A24BF386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8C50A24-5B96-4298-9D20-C200A24BF386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8C50A24-5B96-4298-9D20-C200A24BF386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8C50A24-5B96-4298-9D20-C200A24BF386}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8550A09D-C36D-408A-AD82-58DBD67E995D}
+	EndGlobalSection
+EndGlobal
