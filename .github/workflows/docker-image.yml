@@ -28,13 +28,11 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker buildx build -t repasscloud/lvpnportal .
-        docker push repasscloud/lvpnportal
-#        docker buildx create --use
-#        docker buildx inspect
-#        docker buildx build --platform linux/amd64 -t repasscloud/lvpnportal:latest -t repasscloud/lvpnportal:$GITHUB_SHA .
-#        docker push repasscloud/lvpnportal:latest
-#        docker push repasscloud/lvpnportal:$GITHUB_SHA
+        docker buildx create --use
+        docker buildx inspect
+        docker buildx build --platform linux/amd64 -t repasscloud/lvpnportal:latest -t repasscloud/lvpnportal:$GITHUB_SHA .
+        docker buildx push repasscloud/lvpnportal:latest
+        docker buildx push repasscloud/lvpnportal:$GITHUB_SHA
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
