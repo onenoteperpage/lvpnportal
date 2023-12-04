@@ -16,7 +16,7 @@ namespace LvpnPortal.Services
 
         private void ConfigureHttpClient()
         {
-            _myTypedHttpClient.ConfigureHttpClient("https://api.vultr.com/v2", _myTypedHttpClient.Configuration["ExternalApiKeys:Vultr"]!, client =>
+            _myTypedHttpClient.ConfigureHttpClient("https://api.vultr.com", _myTypedHttpClient.Configuration["ExternalApiKeys:Vultr"]!, client =>
             {
                 // No need to set Authorization header here since it's already set in the ConfigureHttpClient method of MyTypedHttpClient
             });

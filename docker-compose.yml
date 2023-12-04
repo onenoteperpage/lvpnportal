@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # ngrok:
+  #   image: ngrok/ngrok:alpine
+  #   command: ["start", "--all"]
+  #   volumes:
+  #     - ./etc/ngrok/ngrok.yaml:/etc/ngrok.yaml
+  #   networks:
+  #     - ngrok
+  #   environment:
+  #     - NGROK_CONFIG=/etc/ngrok.yaml
+  #   depends_on:
+  #     - lvpnportal
+
+  lvpnportal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lvpnportal:dev
+    container_name: lvpnportal
+    expose:
+      - "80:80"
+    # networks:
+    #   - ngrok
+    #   - lvpn-net
+    # depends_on:
+    #   - lvpnapi
+
+#   lvpnapi:
+#     image: repasscloud/lvpnapi:dev
+#     container_name: lvpnapi
+#     expose:
+#       - "80"
+#     networks:
+#       - lvpn-net
+
+# networks:
+#   ngrok:
+#     driver: bridge
+
+#   lvpn-net:
+#     driver: bridge

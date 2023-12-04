@@ -7,16 +7,19 @@ namespace LvpnPortal.Services
     public class LunaApiService : ILunaApiService
 	{
         private readonly MyTypedHttpClient _myTypedHttpClient;
+        private readonly IConfiguration _configuration;
 
-        public LunaApiService(MyTypedHttpClient myTypedHttpClient)
+        public LunaApiService(MyTypedHttpClient myTypedHttpClient, IConfiguration configuration)
         {
             _myTypedHttpClient = myTypedHttpClient;
+            _configuration = configuration;
             ConfigureHttpClient();
         }
 
         private void ConfigureHttpClient()
         {
-            _myTypedHttpClient.ConfigureHttpClient("http://localhost:5000", _myTypedHttpClient.Configuration["InternalApiKeys:LunaCIP"]!, client =>
+            string apiUrl = _configuration["ApiUrls:LunaApi"]!;
+            _myTypedHttpClient.ConfigureHttpClient(apiUrl, _myTypedHttpClient.Configuration["InternalApiKeys:LunaCIP"]!, client =>
             {
                 // No need to set Authorization header here since it's already set in the ConfigureHttpClient method of MyTypedHttpClient
             });

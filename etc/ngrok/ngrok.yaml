@@ -1,0 +1,8 @@
+authtoken: 2Z4k5dklRraMkdM7uE79zlWIbxE_5bwABg8VqVtTUDemiCu8k
+version: 2
+tunnels:
+  webhook:
+    addr: lvpnportal:80
+    proto: http
+    hostname: crisp-sunny-turtle.ngrok-free.app
+

@@ -11,7 +11,7 @@
     "lvpnportal": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:6902",
+      "applicationUrl": "https://localhost:54465;http://localhost:1166",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
