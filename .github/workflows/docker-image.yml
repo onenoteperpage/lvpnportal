@@ -30,9 +30,11 @@ jobs:
       run: |
         docker buildx create --use
         docker buildx inspect
-        docker buildx build --platform linux/amd64 -t repasscloud/lvpnportal:latest -t repasscloud/lvpnportal:$GITHUB_SHA .
+        docker buildx build --platform linux/amd64 -t repasscloud/lvpnportal:latest .
         docker buildx push repasscloud/lvpnportal:latest
-        docker buildx push repasscloud/lvpnportal:$GITHUB_SHA
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Pull docker image
+      run: docker pull repasscloud/lvpnportal
