@@ -1,4 +1,15 @@
-﻿.navbar-toggler {
+﻿@media (min-width: 641px) {
+    .navbar-toggler {
+        display: none;
+    }
+
+    .collapse {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}
+
+.navbar-toggler {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -40,24 +51,16 @@
         line-height: 3rem;
     }
 
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
-}
+        .nav-item ::deep a.active {
+            background-color: rgba(255,255,255,0.25);
+            color: white;
+        }
 
-.nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
+        .nav-item ::deep a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
 
-@media (min-width: 641px) {
-    .navbar-toggler {
-        display: none;
+    .nav-item .oi.custom-icon {
+        margin-left: 8px !important; /* Adjust the value as needed */
     }
-
-    .collapse {
-        /* Never collapse the sidebar for wide screens */
-        display: block;
-    }
-}
-
