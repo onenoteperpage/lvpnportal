@@ -2,7 +2,7 @@
 {
 	public interface IUsrService
 	{
-		Task CreateUserAccount(string encryptedUserId);
+		Task<int> CreateUserAccount(string encryptedUserId);
 	}
 }
 

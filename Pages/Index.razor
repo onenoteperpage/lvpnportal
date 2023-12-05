@@ -1,11 +1,15 @@
 ﻿@page "/"
 @attribute [Authorize]
-@*@inject IUsrService UsrService*@
+@inject IUsrService UsrService
 
 <PageTitle>LunaVPN Portal</PageTitle>
 
-<h2>@usrId</h2>
-<h3>@email</h3>
+<h3>@usrId</h3>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <h2>@errorMessage</h2>
+}
 
 @code {
     [CascadingParameter]
@@ -13,6 +17,7 @@
 
     private string usrId = string.Empty;
     private string email = string.Empty;
+    private string errorMessage = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -20,8 +25,10 @@
         {
             var state = await authenticationState;
             email = state?.User?.Identity?.Name ?? "UNKNOWN USER";
-            usrId = EncryptionHelper.GenerateToken(email);
-            //await UsrService.CreateUserAccount(encryptedUserId: usrId);
+            usrId = EncryptionHelper.GenerateToken(email).Replace('/','_').Replace('\\','_');
+            var result = await UsrService.CreateUserAccount(encryptedUserId: usrId);
+            if (result == 1)
+                errorMessage = "Contact support";
         }
 
         await base.OnInitializedAsync();
