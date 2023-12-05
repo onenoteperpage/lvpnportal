@@ -29,6 +29,12 @@
     <None Remove="Models\VultrApi\Shared\" />
     <None Remove="Shared\VultrCustom\" />
     <None Remove="Models\LunaCustom\" />
+    <None Remove="Models\LunaCustom\UsrData\" />
+    <None Remove="Models\LunaCustom\UsrData\AccountHistory\" />
+    <None Remove="Models\LunaCustom\UsrData\Instances\" />
+    <None Remove="Models\LunaCustom\Apps\" />
+    <None Remove="Models\LunaCustom\Apps\SquidProxy\" />
+    <None Remove="Models\LunaCustom\Apps\Wireguard\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -45,5 +51,11 @@
     <Folder Include="Models\VultrApi\Shared\" />
     <Folder Include="Shared\VultrCustom\" />
     <Folder Include="Models\LunaCustom\" />
+    <Folder Include="Models\LunaCustom\UsrData\" />
+    <Folder Include="Models\LunaCustom\UsrData\AccountHistory\" />
+    <Folder Include="Models\LunaCustom\UsrData\Instances\" />
+    <Folder Include="Models\LunaCustom\Apps\" />
+    <Folder Include="Models\LunaCustom\Apps\SquidProxy\" />
+    <Folder Include="Models\LunaCustom\Apps\Wireguard\" />
   </ItemGroup>
 </Project>

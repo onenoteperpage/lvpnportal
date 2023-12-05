@@ -28,7 +28,7 @@ namespace LvpnPortal.Services
         {
             using (var request = _myTypedHttpClient.CreateRequest(HttpMethod.Get, "/v2/regions"))
             {
-                Console.WriteLine($"Request URL: {_myTypedHttpClient.Client.BaseAddress}{request.RequestUri}");
+                //Console.WriteLine($"Request URL: {_myTypedHttpClient.Client.BaseAddress}{request.RequestUri}");
 
                 using (var response = await _myTypedHttpClient.Client.SendAsync(request))
                 {

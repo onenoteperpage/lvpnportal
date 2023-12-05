@@ -21,7 +21,7 @@ builder.Services.AddServerSideBlazor();
 // Register HttpClient with HttpClientFactory
 builder.Services.AddHttpClient<MyTypedHttpClient>();
 
-//builder.Services.AddSingleton<IUsrService, UsrService>();
+builder.Services.AddSingleton<IUsrService, UsrService>();
 builder.Services.AddSingleton<IVultrApiService, VultrApiService>();
 builder.Services.AddSingleton<ILunaApiService, LunaApiService>();
 

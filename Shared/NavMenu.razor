@@ -9,47 +9,63 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/purchase-instance">
-                <span class="oi oi-plus" aria-hidden="true"></span> Purchase VPN
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/create-instance">
-                <span class="oi oi-plus" aria-hidden="true"></span> Create VPN
-            </NavLink>
-        </div>
-        @* <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div> *@
-        
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/login?redirectUri=/">
-                <span class="oi bi-key" aria-hidden="true"></span> Login
-            </NavLink>
-        </div>
+        @if (showLogoffButton)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi bi-speedometer2 custom-icon" aria-hidden="true"></span> Dashboard
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/create-instance">
+                    <span class="oi bi-shield-check custom-icon" aria-hidden="true"></span> Create VPN
+                </NavLink>
+            </div>
+
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/buy-vps-license">
+                    <span class="oi bi-cart custom-icon" aria-hidden="true"></span> Purchase VPN
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/logout">
+                    <span class="oi bi-box-arrow-left custom-icon" aria-hidden="true"></span> Logout
+                </NavLink>
+            </div>
+        }
+        else
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="/login?redirectUri=/">
+                    <span class="oi bi-key custom-icon" aria-hidden="true"></span> Login
+                </NavLink>
+            </div>
+        }
     </nav>
 </div>
 @code {
     private bool collapseNavMenu = true;
+    private bool showLogoffButton = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    [CascadingParameter]
+    private Task<AuthenticationState>? authenticationState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (authenticationState is not null)
+        {
+            var state = await authenticationState;
+            showLogoffButton = state.User.Identity!.IsAuthenticated;
+        }
+
+        await base.OnInitializedAsync();
     }
 }
 

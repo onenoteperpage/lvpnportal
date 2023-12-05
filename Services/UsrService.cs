@@ -1,33 +1,103 @@
-﻿//using LvpnPortal.Interfaces;
+﻿using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using LvpnPortal.Interfaces;
+using LvpnPortal.Models.LunaCustom.UsrData;
+using LvpnPortal.Models.LunaCustom.UsrData.Instances;
 
-//namespace LvpnPortal.Services
-//{
-//    public class UsrService : IUsrService
-//	{
-//        private readonly LvHttpClient _lvHttpClient;
+namespace LvpnPortal.Services
+{
+    public class UsrService : IUsrService
+    {
+        private readonly MyTypedHttpClient _myTypedHttpClient;
+        private readonly IConfiguration _configuration;
 
-//        public UsrService(LvHttpClient lvHttpClient)
-//        {
-//            _lvHttpClient = lvHttpClient ?? throw new ArgumentNullException(nameof(lvHttpClient));
-//        }
+        public List<UsrInstance> UsrInstances { get; set; } = new List<UsrInstance>();
 
-//        public async Task CreateUserAccount(string encryptedUserId)
-//        {
-//            var endpoint = $"/api/UsrData/NewUser/{encryptedUserId}";
+        public UsrService(MyTypedHttpClient myTypedHttpClient, IConfiguration configuration)
+        {
+            _myTypedHttpClient = myTypedHttpClient;
+            _configuration = configuration;
+            ConfigureHttpClient();
+        }
 
-//            var response = await _lvHttpClient.PostAsync(endpoint, new StringContent(""));
+        private void ConfigureHttpClient()
+        {
+            string apiUrl = _configuration["ApiUrls:LunaApi"]!;
+            _myTypedHttpClient.ConfigureHttpClient(apiUrl, _myTypedHttpClient.Configuration["InternalApiKeys:UsrService"]!, client =>
+            {
+                // No need to set Authorization header here since it's already set in the ConfigureHttpClient method of MyTypedHttpClient
+            });
+        }
 
-//            // Process the response as needed
-//            if (response.IsSuccessStatusCode)
-//            {
-//                //TODO: Add a response handler for the GUI
-//            }
-//            else
-//            {
-//                //TODO: Add a response handler for the GUI
-//                Console.WriteLine($"Error: {response.StatusCode}");
-//            }
-//        }
-//    }
-//}
+        public async Task<int> CreateUserAccount(string encryptedUserId)
+        {
+            UsrData usrData = new UsrData()
+            {
+                AccountId = encryptedUserId,
+                InstanceCount = 0,
+                AvailableInstances = 0,
+            };
+
+            // Create JsonSerializerOptions with DefaultIgnoreCondition
+            var options = new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase, // Optional: Use camelCase for property names
+            };
+
+            // Serialize the object into JSON using JsonSerializerOptions
+            string jsonBody = JsonSerializer.Serialize(usrData, options);
+
+            try
+            {
+                using (var request = _myTypedHttpClient.CreateRequest(HttpMethod.Post, "/api/UsrData"))
+                {
+                    request.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+
+                    using (var response = await _myTypedHttpClient.Client.SendAsync(request))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            // Handle success
+                            return 0;
+                        }
+                        else
+                        {
+                            // Handle failure
+                            return 1;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Handle failure
+                return 1;
+            }
+        }
+
+        public async Task LoadUsrInstances(string encryptedUserId)
+        {
+            try
+            {
+                using (var request = _myTypedHttpClient.CreateRequest(HttpMethod.Get, $"/api/UsrInstance/ByEncryptedUserId/{encryptedUserId}"))
+                {
+                    using (var response = await _myTypedHttpClient.Client.SendAsync(request))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string jsonString = await response.Content.ReadAsStringAsync();
+                            UsrInstances = JsonSerializer.Deserialize<List<UsrInstance>>(jsonString)!;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // do nothing
+            }
+        }
+    }
+}
 
