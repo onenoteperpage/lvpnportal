@@ -1,3 +1,9 @@
-﻿optechx-portaladmin.project77.co {
-  reverse_proxy http://optechx-portaladmin
-}
+﻿:80
+
+reverse_proxy lvpnportal:80
+
+:443
+
+reverse_proxy lvpnportal:80
+
+tls danijel@repasscloud.com
