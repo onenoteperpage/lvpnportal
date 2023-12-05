@@ -5,7 +5,8 @@ COPY *.csproj /app
 RUN dotnet restore *.csproj
 COPY . .
 RUN dotnet build -c Release   # Build in Release mode
-RUN ASPNETCORE_ENVIRONMENT=Production dotnet publish -c Release -o /app/out  # Set environment to Production during publish
+# Set environment to Production during publish
+RUN ASPNETCORE_ENVIRONMENT=Production dotnet publish -c Release -o /app/out
 
 # Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime

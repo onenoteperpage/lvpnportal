@@ -1,43 +1,30 @@
 version: '3.8'
 
 services:
-  # ngrok:
-  #   image: ngrok/ngrok:alpine
-  #   command: ["start", "--all"]
-  #   volumes:
-  #     - ./etc/ngrok/ngrok.yaml:/etc/ngrok.yaml
-  #   networks:
-  #     - ngrok
-  #   environment:
-  #     - NGROK_CONFIG=/etc/ngrok.yaml
-  #   depends_on:
-  #     - lvpnportal
-
   lvpnportal:
     build:
       context: .
       dockerfile: Dockerfile
     image: lvpnportal:dev
     container_name: lvpnportal
+    restart: always
     expose:
+      - "80"
+    networks:
+      - lvpn_network
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: always
+    ports:
       - "80:80"
-    # networks:
-    #   - ngrok
-    #   - lvpn-net
-    # depends_on:
-    #   - lvpnapi
+      - "443:443"
+    networks:
+      - lvpn_network
+    volumes:
+      - ./etc/Caddyfile:/etc/caddy/Caddyfile
 
-#   lvpnapi:
-#     image: repasscloud/lvpnapi:dev
-#     container_name: lvpnapi
-#     expose:
-#       - "80"
-#     networks:
-#       - lvpn-net
-
-# networks:
-#   ngrok:
-#     driver: bridge
-
-#   lvpn-net:
-#     driver: bridge
+networks:
+  lvpn_network:
+    driver: bridge
