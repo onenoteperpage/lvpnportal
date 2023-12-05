@@ -4,12 +4,101 @@
 
 <PageTitle>LunaVPN Portal</PageTitle>
 
-<h3>@usrId</h3>
+<div class="container-fluid">
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <!-- Show error message -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h2 class="h3 mb-0 text-gray-800">@errorMessage</h2>
+        </div>
+    }
+    else
+    {
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        </div>
 
-@if (!string.IsNullOrEmpty(errorMessage))
-{
-    <h2>@errorMessage</h2>
-}
+        <!-- show instances (if any) -->
+        @if (usrInstances.Count > 0)
+        {
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-dark">VPN Servers</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Locale</th>
+                                    <th>Info</th>
+                                    <th>Expires</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var instance in usrInstances)
+                                {
+                                    <tr>
+                                        <td><span class="fi fi-@instance.Iso3166"></span></td>
+                                        <td><button type="button" class="btn btn-primary btn-sm" @onclick="() => ShowInstanceInfo(instance.CipInstanceId!)">Info</button></td>
+                                        <td>@(instance.Expires?.ToString("yyyy-MM-dd") ?? "No expiration date")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        <!-- show if no usrLicense (no current subscriptions) -->
+        else if (usrLicenseCount < 1)
+        {
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-dark">Get Started with LunaVPN for Enhanced Online Security</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <p class="lead">
+                                Welcome to LunaVPN! It seems you haven't subscribed to our service yet. Take the next
+                                step towards a secure online experience by visiting the <a href="/buy-vps-license">Purchase Subscription</a> page.
+                                Choose the VPN service term that suits you best, and let's get started on enhancing
+                                your online privacy and security.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <!-- has license, but not setup yet -->
+        else if (usrLicenseCount > 0)
+        {
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-dark">Get Started with LunaVPN for Enhanced Online Security</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <p class="lead">
+                                Great news! You're now a part of LunaVPN, and your subscription is active. To start
+                                enjoying a secure online experience, head to the <a href="">Create VPN</a> page to choose your
+                                preferred location for deployment. Select from our range of servers and take control
+                                of your personalized VPN experience. Let's enhance your online privacy and security
+                                together!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            
+        }
+    }
+</div>
 
 @code {
     [CascadingParameter]
@@ -18,6 +107,16 @@
     private string usrId = string.Empty;
     private string email = string.Empty;
     private string errorMessage = string.Empty;
+    private int usrLicenseCount = 0;
+    private List<UsrInstance> usrInstances = new();
+
+    private async Task ShowInstanceInfo(string cipInstanceId)
+    {
+        // Your logic for rebooting the instance goes here
+        // You can use cipInstanceId in this function
+        // Example: await SomeService.RebootInstanceAsync(cipInstanceId);
+        await Task.CompletedTask;
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -25,10 +124,12 @@
         {
             var state = await authenticationState;
             email = state?.User?.Identity?.Name ?? "UNKNOWN USER";
-            usrId = EncryptionHelper.GenerateToken(email).Replace('/','_').Replace('\\','_');
+            usrId = EncryptionHelper.GenerateToken(email).Replace('/', '_').Replace('\\', '_');
             var result = await UsrService.CreateUserAccount(encryptedUserId: usrId);
             if (result == 1)
                 errorMessage = "Contact support";
+            await UsrService.LoadUsrInstances(encryptedUserId: usrId);
+            usrInstances = UsrService.UsrInstances;
         }
 
         await base.OnInitializedAsync();

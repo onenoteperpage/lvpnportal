@@ -11,6 +11,9 @@ namespace LvpnPortal.Models.LunaCustom.UsrData.Instances
         [JsonPropertyName("usr_id")]  //who owns this
         public string? UsrId { get; set; }
 
+        [JsonPropertyName("iso3166")]
+        public string? Iso3166 { get; set; }  //2 letter country code for flag etc
+
         [JsonPropertyName("provider")]  //who provides this
         public string? Provider { get; set; }
 

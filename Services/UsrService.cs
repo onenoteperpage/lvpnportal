@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using LvpnPortal.Interfaces;
 using LvpnPortal.Models.LunaCustom.UsrData;
+using LvpnPortal.Models.LunaCustom.UsrData.Instances;
 
 namespace LvpnPortal.Services
 {
@@ -10,6 +11,8 @@ namespace LvpnPortal.Services
     {
         private readonly MyTypedHttpClient _myTypedHttpClient;
         private readonly IConfiguration _configuration;
+
+        public List<UsrInstance> UsrInstances { get; set; } = new List<UsrInstance>();
 
         public UsrService(MyTypedHttpClient myTypedHttpClient, IConfiguration configuration)
         {
@@ -71,6 +74,28 @@ namespace LvpnPortal.Services
             {
                 // Handle failure
                 return 1;
+            }
+        }
+
+        public async Task LoadUsrInstances(string encryptedUserId)
+        {
+            try
+            {
+                using (var request = _myTypedHttpClient.CreateRequest(HttpMethod.Get, $"/api/UsrInstance/ByEncryptedUserId/{encryptedUserId}"))
+                {
+                    using (var response = await _myTypedHttpClient.Client.SendAsync(request))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string jsonString = await response.Content.ReadAsStringAsync();
+                            UsrInstances = JsonSerializer.Deserialize<List<UsrInstance>>(jsonString)!;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // do nothing
             }
         }
     }

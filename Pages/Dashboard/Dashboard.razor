@@ -29,7 +29,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Info</th>
                             <th>Locale</th>
                             <th>Reboot</th>
                             <th>Delete</th>
@@ -65,10 +65,13 @@
 
 
 @code {
-    private int serverCount = 2;
-    private string strServer = " Server";
-    private string strServers = " Servers";
-    private string accountExpDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
-    private string notificationCount = "2";
+
+    private async Task RebootInstance(string cipInstanceId)
+    {
+        // Your logic for rebooting the instance goes here
+        // You can use cipInstanceId in this function
+        // Example: await SomeService.RebootInstanceAsync(cipInstanceId);
+        await Task.CompletedTask;
+    }
 }
 
