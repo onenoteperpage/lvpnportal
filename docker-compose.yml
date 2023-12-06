@@ -2,10 +2,7 @@ version: '3.8'
 
 services:
   lvpnportal:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: lvpnportal:dev
+    image: sjc.vultrcr.com/lvpn/lvpnportal:latest
     container_name: lvpnportal
     restart: always
     expose:
@@ -25,8 +22,12 @@ services:
     networks:
       - lvpn_network
     volumes:
+      - caddy_data:/data
       - ./etc/Caddyfile:/etc/caddy/Caddyfile
 
 networks:
   lvpn_network:
     driver: bridge
+
+volumes:
+  caddy_data:
