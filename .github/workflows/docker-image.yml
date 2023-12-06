@@ -22,7 +22,7 @@ jobs:
 
     - name: Login to VCR
       run: |
-        echo "${{ secrets.VCR_DOCKER_PASSWORD }}" | docker login -u "${{ secrets.VCR_DOCKER_USERNAME }}" --password-stdin
+        echo "${{ secrets.VCR_DOCKER_PASSWORD }}" | docker login https://sjc.vultrcr.com/lvpn -u "${{ secrets.VCR_DOCKER_USERNAME }}" --password-stdin
 
     - name: Build and Push Docker Image
       run: |
