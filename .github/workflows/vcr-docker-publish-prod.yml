@@ -25,6 +25,5 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker buildx create --use
-        docker buildx inspect
-        docker buildx build --platform linux/amd64,linux/arm64 -t sjc.vultrcr.com/lvpn/lvpnportal:latest --push .
+        docker build --rm --no-cache -t  sjc.vultrcr.com/lvpn/lvpnportal:latest .
+        docker push sjc.vultrcr.com/lvpn/lvpnportal:latest
