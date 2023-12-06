@@ -29,4 +29,4 @@ jobs:
         docker buildx create --use
         docker buildx inspect
         docker buildx build --platform linux/amd64 -t sjc.vultrcr.com/lvpn/lvpnportal:dev .
-        docker buildx push docker push ssjc.vultrcr.com/lvpn/lvpnportal:dev
+        docker buildx push docker push sjc.vultrcr.com/lvpn/lvpnportal:dev
