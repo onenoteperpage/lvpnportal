@@ -1,10 +1,9 @@
-name: VCR Docker Publish
+name: VCR Docker Publish Prod
 
 on:
   schedule:
-    - cron: '22 11 * * *'
+    - cron: '0 23 * * *'
   push:
-    branches: [ "dev" ]
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "main" ]
@@ -28,4 +27,4 @@ jobs:
       run: |
         docker buildx create --use
         docker buildx inspect
-        docker buildx build --platform linux/amd64 -t sjc.vultrcr.com/lvpn/lvpnportal:dev --push .
+        docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t sjc.vultrcr.com/lvpn/lvpnportal:latest --push .
